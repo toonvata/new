@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import './App.css';
+import ReactDOM from 'react-dom/client';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import App from './App.jsx';
+import './index.css';
+
 
 function App() {
   const [answers, setAnswers] = useState({});
   const [symptoms, setSymptoms] = useState([]);
   const [results, setResults] = useState(null);
+  const queryClient = new QueryClient();
 
   const questions = {
     "รสชาติอาหารที่ชอบ": {
@@ -146,7 +152,13 @@ function App() {
       userSymptoms: symptoms
     });
   };
-
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
+  </React.StrictMode>
+);
   return (
     <div className="container">
       <h1 className="title">แบบประเมินธาตุเด่นตามหลักการแพทย์แผนไทยจากคัมภีร์ธาตุวิวรรณ์</h1>
